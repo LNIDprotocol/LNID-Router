@@ -25,7 +25,7 @@ app.get('/ping', async function(req, res) {
 app.get('/.well-known/lnurlp/:uname', async function(req, res) {
     try{
         var s = await core.getRecord(req.params.uname)
-        res.send(s.rawData);
+        res.send(s.raw);
     }catch(e)
     {
         console.log(e);
@@ -39,7 +39,7 @@ app.get('/.well-known/lnurlp/:uname', async function(req, res) {
 app.get('/.well-known/nostr.json', async function(req, res) {
     try{
         var s = await core.getNip05(req.query.name)
-        res.send(s.rawData);
+        res.send(s.raw);
     }catch(e)
     {
         console.log(e);

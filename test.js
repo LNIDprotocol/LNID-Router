@@ -4,7 +4,7 @@ const nt = require('nostr-tools')
 async function dbTest()
 {
     const dm = await db.getDomain();
-    console.log(dm[1])
+    console.log(dm)
 }
 async function test()
 {

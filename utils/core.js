@@ -7,8 +7,9 @@ async function getRecord(uanme)
     var ret = await db.getDomainByName(uanme);
     if(ret && ret.length > 0)
     {
-        ret[0].forward.ln.rawData = Buffer.from(ret[0].rawData,"base64").toString("utf-8")
-        ret[0].forward.ln.rawData = JSON.parse(ret[0].rawData)
+        console.log(ret[0])
+        ret[0].forward.ln.raw = Buffer.from(ret[0].forward.ln.raw ,"base64").toString("utf-8")
+        ret[0].forward.ln.raw = JSON.parse(ret[0].forward.ln.raw )
         return ret[0].forward.ln
     }else{
         return false;
@@ -47,9 +48,9 @@ async function getNip05(uanme)
     var ret = await db.getDomainByName(uanme);
     if(ret && ret.length > 0)
     {
-        ret[0].forward.ln.rawData = Buffer.from(ret[0].rawData,"base64").toString("utf-8")
-        ret[0].forward.ln.rawData = JSON.parse(ret[0].rawData)
-        return ret[0].forward.ln
+        ret[0].forward.nostr.raw = Buffer.from(ret[0].forward.nostr.raw,"base64").toString("utf-8")
+        ret[0].forward.nostr.raw = JSON.parse(ret[0].forward.nostr.raw)
+        return ret[0].forward.nostr
     }else{
         return false;
     }
