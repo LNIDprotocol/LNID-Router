@@ -18,7 +18,7 @@ async function menu(bot,uid,req,raw)
     {
         domain.forEach(d => {
             finalText+=`
-\`${d.name}${d.tld}\` - \`${d.name}@${d.visit}\``
+\`${d.name}${d.tld}\` - \`${d.name}${d.visit}\``
         });
     }else
     {
