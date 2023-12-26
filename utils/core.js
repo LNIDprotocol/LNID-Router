@@ -35,7 +35,7 @@ async function newRecord(uid,uanme,ln)
         // console.log(data)
         if(data.raw)
         {
-            await db.updateDomainForward(domain._id,ln,forward);
+            await db.updateDomainForward(domain._id,forward);
             return true;
         }
     }
@@ -55,10 +55,12 @@ async function getNip05(uanme)
     }
 }
 
-async function newNip05(uanme,ln)
+async function newNip05(uid,uanme,ln)
 {
-    if(!(await getNip05(uanme)))
+    var domain = await db.verfiDomainOwning(uid,uanme);
+    if(domain)
     {
+        var forward = domain.forward;
         var nip05Data = {
             names:{
             }
@@ -72,10 +74,11 @@ async function newNip05(uanme,ln)
                 nip05Data
             )).toString("base64")
         }
+        forward['nostr'] = data
         // console.log(data)
         if(data.raw)
         {
-            await sql.newNip05(data);
+            await db.updateDomainForward(domain._id,forward);
             return true;
         }
     }

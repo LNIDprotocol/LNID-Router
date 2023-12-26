@@ -104,7 +104,7 @@ async function getDomainByUid(uid)
     return ret;
 }
 
-async function updateDomainForward(_id,type,data)
+async function updateDomainForward(_id,data)
 {
     const pool =  await MongoClient.connect(process.env.SQL_HOST)
     var seed = pool.db(mainDB);

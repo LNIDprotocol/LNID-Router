@@ -67,22 +67,22 @@ app.get('/.well-known/nostr.json', async function(req, res) {
 //     }
 // })
 
-app.post('/newNip05/:uname', async function(req, res) {
-    try{
-        var s = await core.newNip05(req.params.uname,req.body.ln)
-        res.send({
-            "code":200,
-            "data":s
-        });
-    }catch(e)
-    {
-        console.log(e);
-            res.send({
-            "code":500,
-            "data":"internal error"
-        });
-    }
-})
+// app.post('/newNip05/:uname', async function(req, res) {
+//     try{
+//         var s = await core.newNip05(req.params.uname,req.body.ln)
+//         res.send({
+//             "code":200,
+//             "data":s
+//         });
+//     }catch(e)
+//     {
+//         console.log(e);
+//             res.send({
+//             "code":500,
+//             "data":"internal error"
+//         });
+//     }
+// })
 
 async function init()
 {

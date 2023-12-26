@@ -80,7 +80,7 @@ async function domainManage(bot,uid,req,data,opts)
         {
             var d= domain[0];
             var ln = d.forward.ln?.link || "NA"
-            var nst = d.forward.nostr?.address || "NA"
+            var nst = d.forward.nostr?.link || "NA"
             var http = d.forward.http || "NA"
             var finalText = `
 *${text['domain'][0]} :*
@@ -91,7 +91,7 @@ ${text['domain'][1]} : \`${name}\`
 ${text['domain'][2]} : \`${ln}\`
 ${text['domain'][3]} : \`${nst}\`
 ${text['domain'][4]} : \`${http}\`
-${text['domain'][5]} : \`${d.createTime}\`
+${text['domain'][5]} : \`${new Date(d.createTime).toLocaleString()}\`
             `
             return await tg.tryBotSendMessage(bot,uid,finalText,{
                 parse_mode:'MarkDown',
@@ -245,11 +245,53 @@ async function editDomainLn(bot,uid,req,data,opts)
         return true ;
     }
 }
+
+async function editDomainNostr(bot,uid,req,data,opts)
+{
+    if(req.params.length>0)
+    {
+        const name = req.params[0]
+        if(!(await db.verfiDomainOwning(uid,name)))
+        {
+            return false;
+        }
+        var text = lan.getText()
+        let contentMessage = await bot.sendMessage(uid, text['placeHolder'][2], {
+            parse_mode:'MarkDown',
+            "reply_markup": {
+                "force_reply": true
+            }
+        });
+        listenerReply = (async (replyHandler) => {
+                bot.removeReplyListener(listenerReply);
+                await bot.deleteMessage(contentMessage.chat.id,contentMessage.message_id);
+                await bot.deleteMessage(replyHandler.chat.id,replyHandler.message_id);
+                
+                var data = (replyHandler.text).toLowerCase();
+                var update = await core.newNip05(uid,name,data)
+                console.log(update)
+                if(update)
+                {
+                    var finalText = `*${text['domain'][6]}*`
+                    return await tg.tryBotSendMessage(bot,uid,finalText,{
+                        parse_mode:'MarkDown',
+                        disable_web_page_preview:"true",
+                        reply_markup: JSON.stringify({
+                        inline_keyboard:  [lan.backAndClose()]
+                        })
+                    });
+                }
+            });
+          bot.onReplyToMessage(contentMessage.chat.id, contentMessage.message_id, listenerReply);
+        return true ;
+    }
+}
 module.exports = {
     reg,
     regConfirm,
     domainManage,
     deletedDomain,
     deletedDomainConfirm,
-    editDomainLn
+    editDomainLn,
+    editDomainNostr
 }
