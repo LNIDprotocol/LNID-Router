@@ -52,6 +52,12 @@ async function router(data)
         case "menu":
             await menu.menu(bot,uid,req,data);
             break;
+        case "dashboard":
+            await domain.domainManage(bot,uid,req,data,{});
+            return 0 ;
+        case "register":
+            await domain.reg(bot,uid,req,data,{});
+            break;
         case "debug":
             break;
         default :
@@ -94,11 +100,12 @@ async function callBackRouter(data,action,opts )
         case "close":
             break;
         default :
+            await menu.unKnowRouter(bot,uid,req,data,opts);
+            return 0 ;
             break;
     }
   bot.deleteMessage(opts.chat_id,opts.message_id);
-} 
-
+}
 async function init()
 {
 }

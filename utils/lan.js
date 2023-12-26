@@ -44,7 +44,7 @@ And claim your Lightning Network identity \`LNID\`.
         'building':[
             `⚙ Function`,
             `is under building ...`,
-            `It is a open-source project , You can visit [github]()`
+            `LNID is a open-source project , You can visit [github](https://github.com/LNIDprotocol/LNID-Router.git)`
         ]
     }
 ]
